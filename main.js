@@ -19,11 +19,18 @@ function showTime() {
 
   // 12hr Format
   hour = hour % 12 || 12;
+  let timeHtml = `${hour}:${addZero(min)}:${addZero(sec)}`;
+  timeHtml = timeHtml
+    .split("")
+    .map((x) =>
+      x === ":"
+        ? `<span class="time-colon">${x}</span>`
+        : `<span class="time-digit">${x}</span>`
+    )
+    .reduce((a, b) => a + b);
 
   // Output Time
-  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(
-    sec
-  )} ${showAmPm ? amPm : ""}`;
+  time.innerHTML = `${timeHtml} ${showAmPm ? amPm : ""}`;
 
   setTimeout(showTime, 1000);
 }
@@ -69,6 +76,9 @@ function getName() {
 
 // Set Name
 function setName(e) {
+  if (e.target.innerText === "") {
+    e.target.innerText = "[Enter Name]";
+  }
   if (e.type === "keypress") {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
@@ -91,6 +101,9 @@ function getFocus() {
 
 // Set Focus
 function setFocus(e) {
+  if (e.target.innerText === "") {
+    e.target.innerText = "[Enter Focus]";
+  }
   if (e.type === "keypress") {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
