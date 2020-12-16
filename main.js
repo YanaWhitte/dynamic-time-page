@@ -47,7 +47,7 @@ function setBgGreet() {
 
   if (hour < 12) {
     // Morning
-    document.body.style.backgroundImage = "url('img/morning.jpg')";
+    document.body.style.backgroundImage = "url('img/morning2.jpg')";
     document.body.style.backgroundSize = "cover";
     greeting.textContent = "Good Morning";
   } else if (hour < 18) {
