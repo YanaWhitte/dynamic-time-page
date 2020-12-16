@@ -9,7 +9,6 @@ const showAmPm = true;
 
 // Show Time
 function showTime() {
-  // let today = new Date(2020, 12, 06, 13, 33, 20),
   let today = new Date(),
     hour = today.getHours(),
     min = today.getMinutes(),
@@ -36,24 +35,23 @@ function addZero(n) {
 
 // Set Background and Greeting
 function setBgGreet() {
-  // let today = new Date(2020, 12, 06, 13, 33, 20),
   let today = new Date(),
     hour = today.getHours();
 
   if (hour < 12) {
     // Morning
-    document.body.style.backgroundImage = "url('../img/morning.jpg')";
+    document.body.style.backgroundImage = "url('img/morning.jpg')";
     document.body.style.backgroundSize = "cover";
     greeting.textContent = "Good Morning";
   } else if (hour < 18) {
     // Afternoon
-    document.body.style.backgroundImage = "url('../img/afternoon.jpg')";
+    document.body.style.backgroundImage = "url('img/afternoon.jpg')";
     document.body.style.backgroundSize = "cover";
 
     greeting.textContent = "Good Afternoon";
   } else {
     // Evening
-    document.body.style.backgroundImage = "url('../img/evening.jpg')";
+    document.body.style.backgroundImage = "url('img/evening.jpg')";
     document.body.style.backgroundSize = "cover";
     greeting.textContent = "Good Evening";
     document.body.style.color = "white";
