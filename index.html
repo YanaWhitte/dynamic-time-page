@@ -13,12 +13,22 @@
 <body>
   <time id="time"></time>
   <h1>
-    <span id="greeting"></span>
-    <span id="name" contenteditable="true"></span>
+    <div id="greeting"></div>
+    <div style="display: none;">
+      <div id="name" contenteditable="true"></div>
+    </div>
+    <div id="name_container">
+      <span id="name_input" contenteditable="true"></span>
+      <!-- <input type="text" class="base-input" id="name_input" style="width: 20px"> -->
+    </div>
   </h1>
 
   <h2>What Is Your Focus For Today?</h2>
-  <h2 id="focus" contenteditable="true"></h2>
+  <div style="display: none;">
+    <h2 id="focus"></h2>
+  </div>
+  <h2 class="focus-h2"><span id="focus2"></span></h2>
+  <div id="dummy-elements"></div>
 
   <script src="main.js"></script>
 </body>

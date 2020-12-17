@@ -117,6 +117,7 @@ function setFocus(e) {
 
 name.addEventListener("keypress", setName);
 name.addEventListener("blur", setName);
+
 focus.addEventListener("keypress", setFocus);
 focus.addEventListener("blur", setFocus);
 
@@ -125,3 +126,59 @@ showTime();
 setBgGreet();
 getName();
 getFocus();
+
+function addEditingFeatureToElement(inputElement, placeholder, storageKey) {
+  inputElement.contentEditable = true;
+
+  const loadedFromCache = localStorage.getItem(storageKey);
+  if (typeof loadedFromCache === "string") {
+    if (loadedFromCache !== undefined) {
+      setInputValue(loadedFromCache);
+    } else if (loadedFromCache == "") {
+      setInputValue(placeholder);
+    }
+  }
+
+  function getInputValue() {
+    return inputElement.innerText;
+  }
+
+  function setInputValue(value) {
+    inputElement.innerText = value;
+  }
+
+  inputElement.addEventListener("keyup", (e) => {
+    localStorage.setItem(storageKey, getInputValue());
+  });
+
+  inputElement.addEventListener("focus", (e) => {
+    if (getInputValue() === placeholder) {
+      setInputValue("");
+      inputElement.focus();
+    }
+    inputElement.focus();
+  });
+
+  inputElement.addEventListener("blur", (e) => {
+    if (getInputValue() === "") {
+      setInputValue(placeholder);
+    }
+    localStorage.setItem(storageKey, getInputValue());
+  });
+}
+
+addEditingFeatureToElement(
+  document.getElementById("name_input"),
+  "[Enter Name]",
+  "key"
+);
+
+addEditingFeatureToElement(
+  document.getElementById("focus2"),
+  "[Enter Focus]",
+  "focus"
+);
+
+document.getElementById("dummy-elements").innerHTML = `
+<p style="opacity:0">____________________</p>
+<p style="opacity:0">____________________</p>`;
