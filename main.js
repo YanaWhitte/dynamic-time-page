@@ -1,8 +1,6 @@
 // DOM Elements
 const time = document.getElementById("time"),
-  greeting = document.getElementById("greeting"),
-  name = document.getElementById("name"),
-  focus = document.getElementById("focus");
+  greeting = document.getElementById("greeting");
 
 // Options
 const showAmPm = true;
@@ -45,91 +43,41 @@ function setBgGreet() {
   let today = new Date(),
     hour = today.getHours();
 
-  if (hour < 12) {
+  if (hour < 6) {
+    // Night
+    document.body.style.backgroundImage = "url('img/night.jpg')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    greeting.textContent = "Good Night";
+    document.body.style.color = "white";
+  } else if (hour < 12) {
     // Morning
-    document.body.style.backgroundImage = "url('img/morning2.jpg')";
+    document.body.style.backgroundImage = "url('img/morning.jpg')";
     document.body.style.backgroundSize = "cover";
     greeting.textContent = "Good Morning";
   } else if (hour < 18) {
     // Afternoon
     document.body.style.backgroundImage = "url('img/afternoon.jpg')";
     document.body.style.backgroundSize = "cover";
-
     greeting.textContent = "Good Afternoon";
-  } else {
+  } else if (hour <= 23) {
     // Evening
     document.body.style.backgroundImage = "url('img/evening.jpg')";
     document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
     greeting.textContent = "Good Evening";
     document.body.style.color = "white";
   }
 }
 
-// Get Name
-function getName() {
-  if (localStorage.getItem("name") === null) {
-    name.textContent = "[Enter Name]";
-  } else {
-    name.textContent = localStorage.getItem("name");
-  }
-}
-
-// Set Name
-function setName(e) {
-  if (e.target.innerText === "") {
-    e.target.innerText = "[Enter Name]";
-  }
-  if (e.type === "keypress") {
-    // Make sure enter is pressed
-    if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem("name", e.target.innerText);
-      name.blur();
-    }
-  } else {
-    localStorage.setItem("name", e.target.innerText);
-  }
-}
-
-// Get Focus
-function getFocus() {
-  if (localStorage.getItem("focus") === null) {
-    focus.textContent = "[Enter Focus]";
-  } else {
-    focus.textContent = localStorage.getItem("focus");
-  }
-}
-
-// Set Focus
-function setFocus(e) {
-  if (e.target.innerText === "") {
-    e.target.innerText = "[Enter Focus]";
-  }
-  if (e.type === "keypress") {
-    // Make sure enter is pressed
-    if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem("focus", e.target.innerText);
-      focus.blur();
-    }
-  } else {
-    localStorage.setItem("focus", e.target.innerText);
-  }
-}
-
-name.addEventListener("keypress", setName);
-name.addEventListener("blur", setName);
-
-focus.addEventListener("keypress", setFocus);
-focus.addEventListener("blur", setFocus);
-
 // Run
 showTime();
 setBgGreet();
-getName();
-getFocus();
 
 function addEditingFeatureToElement(inputElement, placeholder, storageKey) {
   inputElement.contentEditable = true;
 
+  // Load cached data from local storage
   const loadedFromCache = localStorage.getItem(storageKey);
   if (typeof loadedFromCache === "string") {
     if (loadedFromCache !== undefined) {
@@ -139,6 +87,7 @@ function addEditingFeatureToElement(inputElement, placeholder, storageKey) {
     }
   }
 
+  // Accessors
   function getInputValue() {
     return inputElement.innerText;
   }
@@ -147,6 +96,13 @@ function addEditingFeatureToElement(inputElement, placeholder, storageKey) {
     inputElement.innerText = value;
   }
 
+  inputElement.addEventListener("keypress", (e) => {
+    if (e.which == 13 || e.keyCode == 13) {
+      e.preventDefault();
+      inputElement.blur();
+    }
+  });
+
   inputElement.addEventListener("keyup", (e) => {
     localStorage.setItem(storageKey, getInputValue());
   });
@@ -154,7 +110,6 @@ function addEditingFeatureToElement(inputElement, placeholder, storageKey) {
   inputElement.addEventListener("focus", (e) => {
     if (getInputValue() === placeholder) {
       setInputValue("");
-      inputElement.focus();
     }
     inputElement.focus();
   });
@@ -174,7 +129,7 @@ addEditingFeatureToElement(
 );
 
 addEditingFeatureToElement(
-  document.getElementById("focus2"),
+  document.getElementById("focus_input"),
   "[Enter Focus]",
   "focus"
 );
